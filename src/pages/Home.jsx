@@ -1,11 +1,12 @@
 import React from 'react';
 import ReportIssueForm from '../components/ReportIssueForm';
+import LocalRepresentatives from '../components/LocalRepresentatives';
 
 const Home = () => {
   return (
     <div>
       <ReportIssueForm />
-      {/* Local representatives and polls section will come next */}
+      <LocalRepresentatives />
     </div>
   );
 };
