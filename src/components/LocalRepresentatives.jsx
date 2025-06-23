@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { leadersData } from '../data/leadersData';
 
 const LocalRepresentatives = () => {
   const [location, setLocation] = useState(null);
   const [districtInfo, setDistrictInfo] = useState(null);
   const [error, setError] = useState(null);
+  const [leaders, setLeaders] = useState(null);
 
   useEffect(() => {
     if ('geolocation' in navigator) {
@@ -26,7 +28,18 @@ const LocalRepresentatives = () => {
     try {
       const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
       const data = await res.json();
-      setDistrictInfo(data.address);
+      const address = data.address;
+      setDistrictInfo(address);
+
+      // Try matching from our mock data
+      const state = address.state;
+      const district = address.county || address.district;
+
+      if (leadersData[state] && leadersData[state][district]) {
+        setLeaders(leadersData[state][district]);
+      } else {
+        setLeaders(null);
+      }
     } catch (e) {
       setError('Failed to fetch district info.');
     }
@@ -42,12 +55,14 @@ const LocalRepresentatives = () => {
           <p><strong>District:</strong> {districtInfo.county || districtInfo.district}</p>
           <p><strong>City:</strong> {districtInfo.city || districtInfo.town || districtInfo.village}</p>
 
-          {/* TODO: Map this info to your own MP/MLA data later */}
-          <p><em>[Example Placeholder]</em></p>
-          <ul>
-            <li><strong>MP:</strong> Placeholder for MP of {districtInfo.state}</li>
-            <li><strong>MLA:</strong> Placeholder for MLA of {districtInfo.county || districtInfo.district}</li>
-          </ul>
+          {leaders ? (
+            <div>
+              <p><strong>MP:</strong> {leaders.mp.name} ({leaders.mp.party})</p>
+              <p><strong>MLA:</strong> {leaders.mla.name} ({leaders.mla.party})</p>
+            </div>
+          ) : (
+            <p><em>We couldn't find your MP/MLA in our database yet.</em></p>
+          )}
         </div>
       ) : (
         !error && <p>Fetching your location...</p>
