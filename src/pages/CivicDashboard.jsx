@@ -6,6 +6,8 @@ import SchemesResources from "../components/SchemesResources";
 import ImpactStories from "../components/ImpactStories";
 import "./CivicDashboard.css";
 import CivicNewsMap from "../components/CivicNewsMap";
+import RTIGenerator from "../components/RTIGenerator";
+
 
 
 function CivicDashboard() {
@@ -13,6 +15,7 @@ function CivicDashboard() {
     <div className="dashboard-container">
       <h1>📊 Civic Dashboard</h1>
       <CivicNewsMap />
+      <RTIGenerator />
       <AirQuality />
       <NewsFeed />
       <EmergencyDirectory />
