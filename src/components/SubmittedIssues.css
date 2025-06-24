@@ -1,0 +1,19 @@
+.submitted-issues-container {
+  margin: 2rem;
+  padding: 1rem;
+}
+
+.issue-card {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.issue-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+}
