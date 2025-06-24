@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './SubmittedIssues.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./SubmittedIssues.css";
 
 const SubmittedIssues = () => {
   const [issues, setIssues] = useState([]);
@@ -8,7 +8,9 @@ const SubmittedIssues = () => {
   useEffect(() => {
     const fetchIssues = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/issues");
+        const res = await axios.get(
+          "https://nagrik-citizen.onrender.com/api/issues"
+        );
         setIssues(res.data);
       } catch (err) {
         console.error("Failed to fetch issues", err);
@@ -30,7 +32,7 @@ const SubmittedIssues = () => {
             <p><strong>Location:</strong> {issue.location}</p>
             {issue.image && (
               <img
-                src={`http://localhost:5000/uploads/${issue.image}`}
+                src={`https://nagrik-citizen.onrender.com/uploads/${issue.image}`}
                 alt="Reported"
               />
             )}
