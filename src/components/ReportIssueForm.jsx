@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./ReportIssueForm.css";
 
@@ -9,6 +9,26 @@ function ReportIssueForm() {
     image: null,
   });
   const [message, setMessage] = useState("");
+
+  // 📍 Auto-detect user's location
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setFormData((prev) => ({
+            ...prev,
+            location: `${latitude.toFixed(6)},${longitude.toFixed(6)}`,
+          }));
+        },
+        (error) => {
+          console.warn("Location access denied or failed:", error);
+        }
+      );
+    } else {
+      console.warn("Geolocation not supported");
+    }
+  }, []);
 
   const handleChange = (e) => {
     if (e.target.name === "image") {
@@ -53,7 +73,7 @@ function ReportIssueForm() {
           required
         />
 
-        <label>Your Location</label>
+        <label>Your Location (auto-filled)</label>
         <input
           type="text"
           name="location"
