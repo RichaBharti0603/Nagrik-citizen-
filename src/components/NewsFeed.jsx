@@ -1,53 +1,35 @@
 import React, { useEffect, useState } from "react";
+import "./NewsFeed.css";
 
-const NewsFeed = () => {
+function NewsFeed() {
   const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const NEWS_API_KEY = "YOUR_NEWSAPI_KEY"; // replace this with your key
 
   useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const res = await fetch(
-          `https://newsapi.org/v2/top-headlines?country=in&category=general&pageSize=5&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
-        );
-        const data = await res.json();
-        if (data.status === "ok" && data.articles) {
-          setArticles(data.articles);
-        } else {
-          setArticles([]); // fallback if something is wrong
-        }
-      } catch (error) {
-        console.error("News API error:", error);
-        setArticles([]);
-      } finally {
-        setLoading(false);
-      }
-    };
+    fetch(`https://newsapi.org/v2/top-headlines?country=in&category=general&pageSize=5&apiKey=ff1810b06ab743cf822e10a99c5890e3`)
 
-    fetchNews();
+      .then((res) => res.json())
+      .then((data) => setArticles(data.articles))
+      .catch((err) => setError("Failed to load news"));
   }, []);
 
   return (
-    <div>
-      <h2>📰 Civic News</h2>
-      {loading ? (
-        <p>Loading headlines...</p>
-      ) : articles.length > 0 ? (
-        <ul>
-          {articles.map((article, i) => (
-            <li key={i} style={{ marginBottom: "1rem" }}>
-              <a href={article.url} target="_blank" rel="noreferrer">
-                <strong>{article.title}</strong>
-              </a>
-              <p>{article.description}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No news available at the moment.</p>
-      )}
+    <div className="news-feed">
+      <h2>📰 Live Civic News</h2>
+      {error && <p>{error}</p>}
+      <div className="news-list">
+        {articles.map((article, idx) => (
+          <div key={idx} className="news-card">
+            <h4>{article.title}</h4>
+            <p>{article.description?.slice(0, 100)}...</p>
+            <a href={article.url} target="_blank" rel="noreferrer">Read more</a>
+          </div>
+        ))}
+      </div>
     </div>
   );
-};
+}
 
 export default NewsFeed;

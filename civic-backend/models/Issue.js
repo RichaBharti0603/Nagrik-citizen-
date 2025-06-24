@@ -1,13 +1,19 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const issueSchema = new mongoose.Schema({
+  title: String,
   description: String,
   location: String,
-  image: String,
-  createdAt: {
+  imageUrl: String,
+  date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
+  status: {
+    type: String,
+    enum: ["Pending", "In Progress", "Resolved"],
+    default: "Pending",
+  },
 });
 
-module.exports = mongoose.model('Issue', issueSchema);
+module.exports = mongoose.model("Issue", issueSchema);

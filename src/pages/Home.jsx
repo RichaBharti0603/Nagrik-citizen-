@@ -4,6 +4,7 @@ import SubmittedIssues from '../components/SubmittedIssues';
 import LocalRepresentatives from '../components/LocalRepresentatives';
 import PollsSection from '../components/PollsSection';
 import MapView from "../components/MapView";
+import FeedbackForm from "../components/FeedbackForm";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <LocalRepresentatives />
       <PollsSection />
        <MapView />
+       <FeedbackForm />
     </div>
   );
 };

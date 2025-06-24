@@ -1,14 +1,16 @@
-import React from 'react';
-import './Header.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Header.css";
 
 const Header = () => {
   return (
     <header className="header">
-      <h1>Civic Engagement Platform</h1>
       <nav>
-        <a href="#report">Report Issue</a>
-        <a href="#representatives">Local Reps</a>
-        <a href="#polls">Polls</a>
+        <ul className="nav-links">
+          <li><Link to="/">🏠 Home</Link></li>
+          <li><Link to="/dashboard">📊 Civic Dashboard</Link></li>
+          <li><Link to="/admin">🛠 Admin Panel</Link></li>
+        </ul>
       </nav>
     </header>
   );

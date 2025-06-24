@@ -11,3 +11,18 @@
   margin-left: 1rem;
   text-decoration: none;
 }
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.nav-links li a:hover {
+  color: #007bff;
+}
