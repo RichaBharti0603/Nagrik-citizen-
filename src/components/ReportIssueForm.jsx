@@ -1,34 +1,57 @@
 import React, { useState } from 'react';
-import './ReportIssueForm.css';
+import axios from 'axios';
 
 const ReportIssueForm = () => {
-  const [formData, setFormData] = useState({ description: '', location: '', image: null });
+  const [description, setDescription] = useState('');
+  const [location, setLocation] = useState('');
+  const [image, setImage] = useState(null);
+  const [message, setMessage] = useState('');
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleImageUpload = e => {
-    setFormData(prev => ({ ...prev, image: e.target.files[0] }));
-  };
-
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Issue submitted:', formData);
-    // Next: Connect to backend
+
+    const formData = new FormData();
+    formData.append('description', description);
+    formData.append('location', location);
+    formData.append('image', image);
+
+    try {
+      const res = await axios.post('http://localhost:5000/api/issues', formData);
+      setMessage('✅ Issue submitted successfully!');
+      setDescription('');
+      setLocation('');
+      setImage(null);
+    } catch (err) {
+      console.error(err);
+      setMessage('❌ Failed to submit issue');
+    }
   };
 
   return (
-    <section id="report" className="report-form">
-      <h2>Report a Civic Issue</h2>
-      <form onSubmit={handleSubmit}>
-        <textarea name="description" placeholder="Describe the issue..." onChange={handleChange} required />
-        <input name="location" placeholder="Location or landmark" onChange={handleChange} required />
-        <input type="file" onChange={handleImageUpload} accept="image/*" />
-        <button type="submit">Submit Issue</button>
-      </form>
-    </section>
+    <form onSubmit={handleSubmit} style={{ margin: '2rem' }}>
+      <h2>🚨 Report a Civic Issue</h2>
+      <input
+        type="text"
+        placeholder="Issue Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        required
+      /><br /><br />
+      <input
+        type="text"
+        placeholder="Your Location"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        required
+      /><br /><br />
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(e) => setImage(e.target.files[0])}
+      /><br /><br />
+      <button type="submit">Submit Issue</button>
+      {message && <p>{message}</p>}
+    </form>
   );
 };
 
