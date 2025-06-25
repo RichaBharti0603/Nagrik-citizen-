@@ -2,14 +2,13 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 import LandingPage from "./pages/LandingPage";
-import Home from "./pages/Home"; // 📝 This is your Report Issue page, shown at /report
+import Home from "./pages/Home"; // 📝 Report Issue page
 import CivicDashboard from "./pages/CivicDashboard";
 import AdminView from "./pages/AdminView";
 import Polls from "./pages/Polls";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import MyDashboard from './pages/MyDashboard'; // Make sure this component exists
-
+import MyDashboard from './pages/MyDashboard'; // 👤 User-specific dashboard
 
 function App() {
   return (
@@ -18,10 +17,12 @@ function App() {
         <nav style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
           <Link to="/">🏠 Home</Link>
           <Link to="/report">📌 Report Issue</Link>
-          <Route path="/dashboard" element={<CivicDashboard />} />
-<Route path="/mydashboard" element={<MyDashboard />} />
+          <Link to="/dashboard">📊 Civic Dashboard</Link>
+          <Link to="/mydashboard">👤 My Dashboard</Link>
           <Link to="/polls">🗳 Polls</Link>
           <Link to="/admin">🔧 Admin Panel</Link>
+          <Link to="/login">🔐 Login</Link>
+          <Link to="/signup">📝 Signup</Link>
         </nav>
       </header>
 
@@ -30,10 +31,11 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/report" element={<Home />} />
           <Route path="/dashboard" element={<CivicDashboard />} />
+          <Route path="/mydashboard" element={<MyDashboard />} />
           <Route path="/polls" element={<Polls />} />
           <Route path="/admin" element={<AdminView />} />
           <Route path="/login" element={<Login />} />
-<Route path="/signup" element={<Signup />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </main>
     </Router>
