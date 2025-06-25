@@ -18,7 +18,6 @@ exports.signup = async (req, res) => {
     res.status(500).json({ error: "Signup failed" });
   }
 };
-
 exports.login = async (req, res) => {
   const { username, password } = req.body;
 
