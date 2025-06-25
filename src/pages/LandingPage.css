@@ -53,3 +53,144 @@
   background: #eee;
   margin-top: 2rem;
 }
+/* General styles */
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.landing-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Hero / Header */
+.hero {
+  background: linear-gradient(135deg, #48c6ef 0%, #6f86d6 100%);
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+}
+
+.hero span {
+  color: #ffdf00;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.cta-buttons .btn {
+  background-color: #fff;
+  color: #333;
+  padding: 12px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s;
+  border: 2px solid #fff;
+}
+
+.cta-buttons .btn:hover {
+  background-color: #ffdf00;
+  color: #000;
+}
+
+/* Image section */
+.image-placeholder img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+/* Theory / Informational Sections */
+.theory-section {
+  margin-top: 40px;
+  line-height: 1.7;
+}
+
+.theory-section h2 {
+  color: #3a3a3a;
+  margin-top: 30px;
+  font-size: 1.6rem;
+}
+
+.theory-section ul {
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+.theory-section li {
+  margin-bottom: 8px;
+}
+
+/* Features Grid */
+.features {
+  margin-top: 40px;
+}
+
+.features h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.8rem;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.feature-card {
+  background-color: #fff;
+  padding: 20px;
+  border-left: 5px solid #48c6ef;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease-in-out;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-card h3 {
+  margin-top: 0;
+  color: #007acc;
+}
+
+/* Language Selector */
+select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  margin-left: 10px;
+}
+
+/* Footer */
+.footer {
+  margin-top: 60px;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+  color: #777;
+  border-top: 1px solid #eaeaea;
+}
