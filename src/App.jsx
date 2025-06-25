@@ -9,6 +9,7 @@ import Polls from "./pages/Polls";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import MyDashboard from './pages/MyDashboard'; // 👤 User-specific dashboard
+import PublicSchemes from "./pages/PublicSchemes"; // Add this
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Link to="/admin">🔧 Admin Panel</Link>
           <Link to="/login">🔐 Login</Link>
           <Link to="/signup">📝 Signup</Link>
+          <Link to="/schemes">🏛 Schemes</Link>
         </nav>
       </header>
 
@@ -36,6 +38,7 @@ function App() {
           <Route path="/admin" element={<AdminView />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/schemes" element={<PublicSchemes />} />
         </Routes>
       </main>
     </Router>
