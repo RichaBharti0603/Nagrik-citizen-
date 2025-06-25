@@ -74,5 +74,19 @@ app.post("/api/polls/:id/vote", async (req, res) => {
   await poll.save();
   res.json(poll);
 });
+// in civic-backend/server.js
+app.get("/api/alerts", async (req, res) => {
+  try {
+    const response = await fetch(
+      `https://api.weatherapi.com/v1/alerts.json?key=${process.env.WEATHER_API_KEY}&q=India`
+    );
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error("Alert fetch error:", error);
+    res.status(500).json({ error: "Failed to fetch alerts" });
+  }
+});
+
 
 
