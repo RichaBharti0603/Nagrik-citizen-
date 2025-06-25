@@ -10,9 +10,6 @@ import RTIGenerator from "../components/RTIGenerator";
 import EmergencyAlerts from "../components/EmergencyAlerts";
 import CivicAlerts from "../components/CivicAlerts";
 
-
-
-
 function CivicDashboard() {
   return (
     <div className="dashboard-container">
