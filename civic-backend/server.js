@@ -7,6 +7,7 @@ const Issue = require("./models/Issue");
 const Poll = require("./models/Poll");
 const feedbackRoutes = require("./routes/feedback");
 const newsRoutes = require('./routes/news');
+const authRoutes = require("./routes/authRoutes");
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use("/api/feedback", feedbackRoutes);
 app.use('/api/news', newsRoutes);
+app.use("/api/auth", authRoutes);
 
 
 mongoose.connect(process.env.MONGO_URI, {

@@ -11,8 +11,18 @@ const languages = [
 ];
 
 function LandingPage() {
+  const [showModal, setShowModal] = useState(true);
   const [language, setLanguage] = useState(localStorage.getItem("language") || "en");
   const [email, setEmail] = useState("");
+
+  const motivationalQuotes = [
+    "“Be the change you want to see in the world.” – Mahatma Gandhi",
+    "“The best way to find yourself is to lose yourself in the service of others.”",
+    "“A good citizen is one who contributes to society.”",
+    "“Technology + Civic Will = Powerful Change.”",
+    "“Your voice matters. Raise it wisely.”",
+  ];
+  const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
 
   useEffect(() => {
     if (!localStorage.getItem("language")) {
@@ -38,42 +48,76 @@ function LandingPage() {
     setEmail("");
   };
 
+  const user = localStorage.getItem("nagrikUser");
+
   return (
     <div className="landing-container">
-      <header className="hero">
-        <h1>🧭 Welcome to <span>Nagrik</span></h1>
-        <p>Empowering citizens through technology & civic participation.</p>
-
-        <div style={{ marginTop: "1rem" }}>
-          <label>🌐 Choose Language: </label>
-          <select onChange={handleLanguageChange} defaultValue={language}>
-            {languages.map((lang) => (
-              <option key={lang.code} value={lang.code}>{lang.label}</option>
-            ))}
-          </select>
+      {/* Welcome Modal */}
+      {showModal && (
+        <div className="welcome-modal">
+          <div className="modal-content">
+            <h2>👋 Welcome to Nagrik</h2>
+            <p className="quote">{randomQuote}</p>
+            <button onClick={() => setShowModal(false)}>🚀 Continue to Nagrik</button>
+          </div>
         </div>
+      )}
 
-        <div className="cta-buttons">
-          <Link to="/report" className="btn">📌 Report an Issue</Link>
-          <Link to="/dashboard" className="btn">📊 Civic Dashboard</Link>
-          <Link to="/polls" className="btn">🗳 Citizen Polls</Link>
+      {/* Top Login/Signup or Welcome */}
+      <div className="topbar">
+        <div className="welcome-message">
+          {user ? (
+            <>
+              👋 Welcome, <strong>{user}</strong>
+              <button onClick={() => {
+                localStorage.removeItem("nagrikUser");
+                window.location.reload();
+              }}>Logout</button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="top-link">Login</Link>
+              <Link to="/signup" className="top-link">Sign Up</Link>
+            </>
+          )}
+        </div>
+      </div>
+
+      <header className="hero">
+        <div className="hero-content">
+          <div className="hero-text">
+            <h1>🧭 Welcome to <span>Nagrik</span></h1>
+            <p>Empowering citizens through technology & civic participation.</p>
+
+            <div className="language-selector">
+              <label>🌐 Choose Language: </label>
+              <select onChange={handleLanguageChange} value={language}>
+                {languages.map((lang) => (
+                  <option key={lang.code} value={lang.code}>{lang.label}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="cta-buttons">
+              <Link to="/report" className="btn">📌 Report an Issue</Link>
+              <Link to="/dashboard" className="btn">📊 Civic Dashboard</Link>
+              <Link to="/polls" className="btn">🗳 Citizen Polls</Link>
+            </div>
+          </div>
+
+          <div className="hero-image">
+            <img src="/welcome-banner.jpg" alt="Welcome" />
+          </div>
         </div>
       </header>
 
-      <section className="image-placeholder" style={{ textAlign: "center", margin: "2rem 0" }}>
-        <img src="https://via.placeholder.com/800x300?text=Welcome+to+Nagrik+Platform" alt="Welcome Banner" style={{ borderRadius: "10px", maxWidth: "90%" }} />
-      </section>
-
+      {/* Civic Theory */}
       <section className="theory-section">
         <h2>📖 What is Civic Engagement?</h2>
-        <p>
-          Civic engagement is about making a difference in the civic life of our communities and developing the knowledge and skills to make that difference.
-        </p>
+        <p>Civic engagement is about making a difference in the civic life of our communities and developing the knowledge and skills to make that difference.</p>
 
         <h2>🤝 Why Do We Need Civic Tech?</h2>
-        <p>
-          Civic tech bridges the gap between citizens and governments. It enables transparency, accountability, and improved service delivery.
-        </p>
+        <p>Civic tech bridges the gap between citizens and governments. It enables transparency, accountability, and improved service delivery.</p>
 
         <h2>🌍 What Nagrik Offers</h2>
         <ul>

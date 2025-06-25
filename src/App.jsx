@@ -6,6 +6,8 @@ import Home from "./pages/Home"; // 📝 This is your Report Issue page, shown a
 import CivicDashboard from "./pages/CivicDashboard";
 import AdminView from "./pages/AdminView";
 import Polls from "./pages/Polls";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
           <Route path="/dashboard" element={<CivicDashboard />} />
           <Route path="/polls" element={<Polls />} />
           <Route path="/admin" element={<AdminView />} />
+          <Route path="/login" element={<Login />} />
+<Route path="/signup" element={<Signup />} />
         </Routes>
       </main>
     </Router>
