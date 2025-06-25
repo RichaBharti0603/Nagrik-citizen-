@@ -8,6 +8,8 @@ import AdminView from "./pages/AdminView";
 import Polls from "./pages/Polls";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import MyDashboard from './pages/MyDashboard'; // Make sure this component exists
+
 
 function App() {
   return (
@@ -16,7 +18,8 @@ function App() {
         <nav style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
           <Link to="/">🏠 Home</Link>
           <Link to="/report">📌 Report Issue</Link>
-          <Link to="/dashboard">📊 Dashboard</Link>
+          <Route path="/dashboard" element={<CivicDashboard />} />
+<Route path="/mydashboard" element={<MyDashboard />} />
           <Link to="/polls">🗳 Polls</Link>
           <Link to="/admin">🔧 Admin Panel</Link>
         </nav>

@@ -99,10 +99,12 @@ function LandingPage() {
             </div>
 
             <div className="cta-buttons">
-              <Link to="/report" className="btn">📌 Report an Issue</Link>
-              <Link to="/dashboard" className="btn">📊 Civic Dashboard</Link>
-              <Link to="/polls" className="btn">🗳 Citizen Polls</Link>
-            </div>
+  <Link to="/report" className="btn">📌 Report an Issue</Link>
+  <Link to="/dashboard" className="btn">📊 Civic Dashboard</Link>
+  <Link to="/mydashboard" className="btn">👤 My Dashboard</Link>
+  <Link to="/polls" className="btn">🗳 Citizen Polls</Link>
+</div>
+
           </div>
 
           <div className="hero-image">

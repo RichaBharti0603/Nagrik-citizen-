@@ -28,6 +28,17 @@ router.post('/', upload.single('image'), async (req, res) => {
   }
 });
 
+router.get('/user/:email', async (req, res) => {
+  const { email } = req.params;
+  try {
+    const issues = await Issue.find({ email }); // assuming issue schema has 'email' field
+    res.json(issues);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch user issues' });
+  }
+});
+
+
 // GET: Fetch all issues
 router.get('/', async (req, res) => {
   try {
