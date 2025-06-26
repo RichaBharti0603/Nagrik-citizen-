@@ -5,6 +5,7 @@ import LocalRepresentatives from '../components/LocalRepresentatives';
 import PollsSection from '../components/PollsSection';
 import MapView from "../components/MapView";
 import FeedbackForm from "../components/FeedbackForm";
+import PublicInputEmbed from "../components/PublicInputEmbed";
 
 const Home = () => {
   return (
@@ -15,7 +16,9 @@ const Home = () => {
       <PollsSection />
        <MapView />
        <FeedbackForm />
+       <PublicInputEmbed url="https://publicinput.com/example-survey-page" />
     </div>
+    
   );
 };
 

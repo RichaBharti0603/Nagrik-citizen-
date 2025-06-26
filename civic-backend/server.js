@@ -9,6 +9,7 @@ const feedbackRoutes = require("./routes/feedback");
 const newsRoutes = require('./routes/news');
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require('./routes/user');
+const publicInputRoutes = require("./routes/publicinput");
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use("/api/feedback", feedbackRoutes);
 app.use('/api/news', newsRoutes);
 app.use("/api/auth", authRoutes);
 app.use('/api/user', userRoutes);
+app.use("/api/publicinput", publicInputRoutes);
 
 
 mongoose.connect(process.env.MONGO_URI, {

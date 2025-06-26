@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import MyDashboard from './pages/MyDashboard'; // 👤 User-specific dashboard
 import PublicSchemes from "./pages/PublicSchemes"; // Add this
+import PublicEngagement from "./pages/PublicEngagement";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/schemes" element={<PublicSchemes />} />
+          <Route path="/engagement" element={<PublicEngagement />} />
         </Routes>
       </main>
     </Router>

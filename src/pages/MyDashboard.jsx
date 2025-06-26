@@ -1,48 +1,79 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./MyDashboard.css"; // Optional external CSS for styling
 
-function MyDashboard() {
-  const [data, setData] = useState(null);
+const MyDashboard = () => {
+  const [userStats, setUserStats] = useState({
+    totalIssues: 0,
+    pollsVoted: 0,
+    location: "",
+    alerts: [],
+    schemes: [],
+  });
 
   useEffect(() => {
-    const userId = localStorage.getItem('userId'); // Assumes it's stored at login
-    axios.get(`http://localhost:5000/api/user/${userId}/dashboard`)
-      .then(res => setData(res.data))
-      .catch(err => console.error(err));
-  }, []);
+    const fetchDashboardData = async () => {
+      try {
+        const res = await axios.get("/api/user/dashboard");
+        setUserStats(res.data);
+      } catch (error) {
+        console.error("Error loading dashboard:", error);
+      }
+    };
 
-  if (!data) return <p>Loading your dashboard...</p>;
+    fetchDashboardData();
+  }, []);
 
   return (
     <div className="dashboard-container">
-      <h1>👤 Welcome, {data.name}</h1>
-      <p>Email: {data.email}</p>
+      <h1 className="dashboard-title">👤 My Civic Dashboard</h1>
 
-      <h2>📌 Your Reported Issues</h2>
-      <ul>
-        {data.issuesReported.length === 0 ? <li>No issues yet</li> :
-          data.issuesReported.map(issue => (
-            <li key={issue._id}>{issue.title || issue.description}</li>
-          ))}
-      </ul>
+      <div className="dashboard-grid">
+        <div className="dashboard-card">
+          <h3>📌 Issues Reported</h3>
+          <p>{userStats.totalIssues}</p>
+        </div>
 
-      <h2>🗳 Polls You Voted In</h2>
-      <ul>
-        {data.votedPolls.length === 0 ? <li>No polls voted yet</li> :
-          data.votedPolls.map(poll => (
-            <li key={poll._id}>{poll.question}</li>
-          ))}
-      </ul>
+        <div className="dashboard-card">
+          <h3>🗳 Polls Participated</h3>
+          <p>{userStats.pollsVoted}</p>
+        </div>
 
-      <h2>💬 Feedback You Submitted</h2>
-      <ul>
-        {data.feedback.length === 0 ? <li>No feedback given yet</li> :
-          data.feedback.map(fb => (
-            <li key={fb._id}>{fb.message}</li>
-          ))}
-      </ul>
+        <div className="dashboard-card">
+          <h3>📍 Your Location</h3>
+          <p>{userStats.location || "Unknown"}</p>
+        </div>
+
+        <div className="dashboard-card wide">
+          <h3>🛡️ Latest Civic Alerts</h3>
+          <ul>
+            {userStats.alerts.length === 0 ? (
+              <li>No recent alerts</li>
+            ) : (
+              userStats.alerts.map((alert, index) => (
+                <li key={index}>{alert}</li>
+              ))
+            )}
+          </ul>
+        </div>
+
+        <div className="dashboard-card wide">
+          <h3>📢 Public Schemes for You</h3>
+          <ul>
+            {userStats.schemes.length === 0 ? (
+              <li>No recommended schemes yet.</li>
+            ) : (
+              userStats.schemes.map((scheme, index) => (
+                <li key={index}>
+                  <strong>{scheme.title}</strong>: {scheme.description}
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default MyDashboard;
