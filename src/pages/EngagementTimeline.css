@@ -1,0 +1,48 @@
+/* src/pages/EngagementTimeline.css */
+.timeline-container {
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+  background-color: #f9fafc;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.timeline-container h2 {
+  text-align: center;
+  color: #2c3e50;
+}
+
+.subtext {
+  text-align: center;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.timeline-card {
+  background: white;
+  border-left: 5px solid #007bff;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-card h3 {
+  margin: 0 0 0.5rem;
+  color: #333;
+}
+
+.timeline-card p {
+  margin: 0.25rem 0;
+}
+
+.timeline-card .desc {
+  color: #444;
+  font-size: 0.95rem;
+}
