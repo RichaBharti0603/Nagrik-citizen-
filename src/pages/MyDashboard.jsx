@@ -1,79 +1,53 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./MyDashboard.css"; // Optional external CSS for styling
+import "./MyDashboard.css";
 
-const MyDashboard = () => {
-  const [userStats, setUserStats] = useState({
-    totalIssues: 0,
-    pollsVoted: 0,
-    location: "",
-    alerts: [],
-    schemes: [],
-  });
+function MyDashboard() {
+  const [issues, setIssues] = useState([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchDashboardData = async () => {
+    const fetchUserIssues = async () => {
       try {
-        const res = await axios.get("/api/user/dashboard");
-        setUserStats(res.data);
-      } catch (error) {
-        console.error("Error loading dashboard:", error);
+        const email = localStorage.getItem("email");
+        const res = await axios.get(
+          `http://localhost:5000/api/issues?submittedBy=${encodeURIComponent(email)}`
+        );
+        setIssues(res.data);
+      } catch (err) {
+        setError("Failed to load your issues.");
       }
     };
 
-    fetchDashboardData();
+    fetchUserIssues();
   }, []);
 
   return (
-    <div className="dashboard-container">
-      <h1 className="dashboard-title">👤 My Civic Dashboard</h1>
+    <div className="my-dashboard-container">
+      <h2>My Reported Issues</h2>
+      {error && <p className="error">{error}</p>}
+      {issues.length === 0 && <p>No issues submitted yet.</p>}
 
-      <div className="dashboard-grid">
-        <div className="dashboard-card">
-          <h3>📌 Issues Reported</h3>
-          <p>{userStats.totalIssues}</p>
-        </div>
-
-        <div className="dashboard-card">
-          <h3>🗳 Polls Participated</h3>
-          <p>{userStats.pollsVoted}</p>
-        </div>
-
-        <div className="dashboard-card">
-          <h3>📍 Your Location</h3>
-          <p>{userStats.location || "Unknown"}</p>
-        </div>
-
-        <div className="dashboard-card wide">
-          <h3>🛡️ Latest Civic Alerts</h3>
-          <ul>
-            {userStats.alerts.length === 0 ? (
-              <li>No recent alerts</li>
-            ) : (
-              userStats.alerts.map((alert, index) => (
-                <li key={index}>{alert}</li>
-              ))
+      <div className="issues-list">
+        {issues.map((issue) => (
+          <div key={issue._id} className="issue-card">
+            {issue.imageUrl && (
+              <img src={`http://localhost:5000${issue.imageUrl}`} alt="Issue" />
             )}
-          </ul>
-        </div>
-
-        <div className="dashboard-card wide">
-          <h3>📢 Public Schemes for You</h3>
-          <ul>
-            {userStats.schemes.length === 0 ? (
-              <li>No recommended schemes yet.</li>
-            ) : (
-              userStats.schemes.map((scheme, index) => (
-                <li key={index}>
-                  <strong>{scheme.title}</strong>: {scheme.description}
-                </li>
-              ))
-            )}
-          </ul>
-        </div>
+            <div className="issue-info">
+              <h3>{issue.title}</h3>
+              <p><strong>Category:</strong> {issue.category}</p>
+              <p><strong>Priority:</strong> {issue.priority}</p>
+              <p><strong>Status:</strong> {issue.status}</p>
+              <p><strong>Date:</strong> {new Date(issue.createdAt).toLocaleString()}</p>
+              {issue.location && <p><strong>Location:</strong> {issue.location}</p>}
+              {issue.description && <p><strong>Description:</strong> {issue.description}</p>}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
-};
+}
 
 export default MyDashboard;

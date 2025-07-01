@@ -20,6 +20,7 @@ import CampaignFilter from './pages/CampaignFilter';
 import PublicNotices from './pages/PublicNotices';
 import AdminContentManager from './pages/AdminContentManager';
 import AuthModal from './components/AuthModal'; // 👈 Import Modal Component
+import ReportIssue from "./pages/ReportIssue";
 
 function App() {
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -63,7 +64,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/report" element={<Home />} />
+          <Route path="/report" element={<ReportIssue />} />
           <Route path="/dashboard" element={<CivicDashboard />} />
           <Route path="/mydashboard" element={<MyDashboard />} />
           <Route path="/polls" element={<Polls />} />

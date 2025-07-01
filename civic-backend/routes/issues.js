@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
 const Issue = require('../models/Issue');
+const multer = require('multer');
+const path = require('path');
 
-// Image Upload Setup
+
+// Image Upload Config
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/');
@@ -14,38 +16,35 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// POST: Submit new issue
-router.post('/', upload.single('image'), async (req, res) => {
+// POST /api/issues
+router.post("/", upload.single("image"), async (req, res) => {
   try {
-    const { description, location } = req.body;
-    const image = req.file?.filename;
+    const { title, description, category, location, priority, submittedBy } = req.body;
 
-    const newIssue = new Issue({ description, location, image });
-    await newIssue.save();
-    res.status(201).json({ message: 'Issue reported successfully', issue: newIssue });
-  } catch (err) {
-    res.status(500).json({ error: 'Server error' });
-  }
-});
+    const issue = new Issue({
+      title,
+      description,
+      category,
+      location,
+      priority,
+      submittedBy,
+      imageUrl: req.file ? `/uploads/${req.file.filename}` : null,
+    });
 
-router.get('/user/:email', async (req, res) => {
-  const { email } = req.params;
-  try {
-    const issues = await Issue.find({ email }); // assuming issue schema has 'email' field
-    res.json(issues);
+    await issue.save();
+    res.status(201).json({ message: "Issue reported", issue });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch user issues' });
+    res.status(500).json({ error: "Failed to report issue" });
   }
 });
 
-
-// GET: Fetch all issues
-router.get('/', async (req, res) => {
+// GET /api/issues
+router.get("/", async (req, res) => {
   try {
     const issues = await Issue.find().sort({ createdAt: -1 });
     res.json(issues);
   } catch (err) {
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: "Failed to fetch issues" });
   }
 });
 
