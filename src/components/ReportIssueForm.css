@@ -1,26 +1,110 @@
-.report-form {
-  margin: 2rem;
-  padding: 1rem;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-}
-.report-form h2 {
-  margin-bottom: 1rem;
-}
-.report-form form {
+/* Wrapper */
+.report-issue-wrapper {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: #f0f4f8;
 }
+
+/* Card container */
+.report-card {
+  width: 100%;
+  max-width: 750px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 35px 40px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+}
+
+/* Title */
+.form-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* Form group */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.report-form label {
+  display: block;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 8px;
+}
+
 .report-form input,
-.report-form textarea {
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
+.report-form textarea,
+.report-form select {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  transition: 0.3s ease-in-out;
+  font-family: inherit;
+  box-sizing: border-box;
 }
-.report-form button {
-  background-color: #0b3954;
+
+.report-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.report-form input:focus,
+.report-form textarea:focus,
+.report-form select:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.3);
+}
+
+/* Submit button */
+.submit-btn {
+  width: 100%;
+  background: #3182ce;
   color: white;
-  padding: 0.6rem;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.25s ease;
+}
+
+.submit-btn:hover {
+  background-color: #2b6cb0;
+}
+
+/* Message */
+.message {
+  margin-top: 15px;
+  font-weight: 500;
+  text-align: center;
+  color: #2d3748;
+}
+
+/* Image preview (optional future use) */
+.image-preview {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .report-card {
+    padding: 25px 20px;
+  }
+
+  .form-title {
+    font-size: 22px;
+  }
 }

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { leadersData } from '../data/leadersData';
+import React, { useEffect, useState } from "react";
+import { leadersData } from "../data/leadersData";
+import "./LocalRepresentatives.css";
 
 const LocalRepresentatives = () => {
   const [location, setLocation] = useState(null);
@@ -8,7 +9,7 @@ const LocalRepresentatives = () => {
   const [leaders, setLeaders] = useState(null);
 
   useEffect(() => {
-    if ('geolocation' in navigator) {
+    if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
@@ -16,22 +17,23 @@ const LocalRepresentatives = () => {
           fetchDistrictInfo(latitude, longitude);
         },
         (err) => {
-          setError('Location access denied. Cannot fetch representative info.');
+          setError("Location access denied. Cannot fetch representative info.");
         }
       );
     } else {
-      setError('Geolocation not supported.');
+      setError("Geolocation not supported.");
     }
   }, []);
 
   const fetchDistrictInfo = async (lat, lon) => {
     try {
-      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+      );
       const data = await res.json();
       const address = data.address;
       setDistrictInfo(address);
 
-      // Try matching from our mock data
       const state = address.state;
       const district = address.county || address.district;
 
@@ -41,31 +43,51 @@ const LocalRepresentatives = () => {
         setLeaders(null);
       }
     } catch (e) {
-      setError('Failed to fetch district info.');
+      setError("Failed to fetch district info.");
     }
   };
 
   return (
-    <section id="representatives" style={{ margin: '2rem', padding: '1rem', backgroundColor: '#f0f0f0' }}>
-      <h2>🗳️ Know Your Local Representatives</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <section className="rep-container">
+      <h2 className="rep-heading">🗳️ Know Your Local Representatives</h2>
+
+      {error && <p className="rep-error">{error}</p>}
+
       {districtInfo ? (
-        <div>
-          <p><strong>State:</strong> {districtInfo.state}</p>
-          <p><strong>District:</strong> {districtInfo.county || districtInfo.district}</p>
-          <p><strong>City:</strong> {districtInfo.city || districtInfo.town || districtInfo.village}</p>
+        <div className="rep-location">
+          <div className="rep-location-box">
+            <p><strong>📍 State:</strong> {districtInfo.state}</p>
+            <p><strong>🏛️ District:</strong> {districtInfo.county || districtInfo.district}</p>
+            <p><strong>🏙️ City:</strong> {districtInfo.city || districtInfo.town || districtInfo.village}</p>
+          </div>
 
           {leaders ? (
-            <div>
-              <p><strong>MP:</strong> {leaders.mp.name} ({leaders.mp.party})</p>
-              <p><strong>MLA:</strong> {leaders.mla.name} ({leaders.mla.party})</p>
-            </div>
-          ) : (
-            <p><em>We couldn't find your MP/MLA in our database yet.</em></p>
-          )}
+  <div className="rep-leader-cards">
+    <div className="rep-card">
+      <img src={leaders.mp.image} alt="MP" className="rep-image" />
+      <h3>Member of Parliament (MP)</h3>
+      <p><strong>Name:</strong> {leaders.mp.name}</p>
+      <p><strong>Party:</strong> {leaders.mp.party}</p>
+    </div>
+
+    <div className="rep-card">
+      <img src={leaders.mla.image} alt="MLA" className="rep-image" />
+      <h3>Member of Legislative Assembly (MLA)</h3>
+      <p><strong>Name:</strong> {leaders.mla.name}</p>
+      <p><strong>Party:</strong> {leaders.mla.party}</p>
+    </div>
+  </div>
+) : (
+  <div className="rep-not-found">
+    <h4>🚫 Representatives Not Found</h4>
+    <p>We’re still updating our database for <strong>{districtInfo.county || districtInfo.district}</strong>.</p>
+    <p>You can help by submitting info via our contact form.</p>
+  </div>
+)}
+
         </div>
       ) : (
-        !error && <p>Fetching your location...</p>
+        !error && <p className="rep-loading">Fetching your location...</p>
       )}
     </section>
   );

@@ -14,12 +14,29 @@ function ReportIssueForm() {
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        async (position) => {
           const { latitude, longitude } = position.coords;
-          setFormData((prev) => ({
-            ...prev,
-            location: `${latitude.toFixed(6)},${longitude.toFixed(6)}`,
-          }));
+          try {
+            const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+            const data = await res.json();
+
+            const city = data.address.city || data.address.town || data.address.village || "";
+            const state = data.address.state || "";
+            const road = data.address.road || "";
+            const suburb = data.address.suburb || "";
+            const readableLocation = `${road || suburb || ""}, ${city}, ${state}`.trim();
+
+            setFormData((prev) => ({
+              ...prev,
+              location: readableLocation,
+            }));
+          } catch (err) {
+            console.warn("Reverse geocoding failed:", err);
+            setFormData((prev) => ({
+              ...prev,
+              location: `${latitude.toFixed(6)},${longitude.toFixed(6)}`
+            }));
+          }
         },
         (error) => {
           console.warn("Location access denied or failed:", error);
@@ -49,10 +66,7 @@ function ReportIssueForm() {
     }
 
     try {
-      const res = await axios.post(
-        "https://nagrik-citizen.onrender.com/api/issues",
-        data
-      );
+      await axios.post("https://nagrik-citizen.onrender.com/api/issues", data);
       setMessage("✅ Issue submitted successfully!");
       setFormData({ description: "", location: "", image: null });
     } catch (error) {
@@ -62,38 +76,47 @@ function ReportIssueForm() {
   };
 
   return (
-    <div className="report-issue-container">
-      <h2>Report a Civic Issue</h2>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <label>Issue Description</label>
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          required
-        />
+    <div className="report-issue-wrapper">
+      <div className="report-card">
+        <h2 className="form-title">📢 Report a Civic Issue</h2>
+        <form onSubmit={handleSubmit} encType="multipart/form-data" className="report-form">
+          <div className="form-group">
+            <label>📝 Issue Description</label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Describe the issue clearly..."
+              required
+            />
+          </div>
 
-        <label>Your Location (auto-filled)</label>
-        <input
-          type="text"
-          name="location"
-          value={formData.location}
-          onChange={handleChange}
-          required
-        />
+          <div className="form-group">
+            <label>📍 Your Location (auto-filled)</label>
+            <input
+              type="text"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+              placeholder="Fetching your location..."
+              required
+            />
+          </div>
 
-        <label>Upload Image</label>
-        <input
-          type="file"
-          name="image"
-          accept="image/*"
-          onChange={handleChange}
-        />
+          <div className="form-group">
+            <label>📸 Upload Image</label>
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleChange}
+            />
+          </div>
 
-        <button type="submit">Submit Issue</button>
-      </form>
-
-      {message && <p className="message">{message}</p>}
+          <button type="submit" className="submit-btn">🚀 Submit Issue</button>
+          {message && <p className="message">{message}</p>}
+        </form>
+      </div>
     </div>
   );
 }
