@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
-const fetch = require("node-fetch"); // 👈 required for weather alerts
+const fetch = require("node-fetch");
 const Issue = require("./models/Issue");
 const Poll = require("./models/Poll");
 const User = require("./models/User");
@@ -18,8 +18,14 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ✅ Correct CORS setup — place first
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+const corsOptions = {
+  origin: ['http://localhost:3000', 'https://nagrik-citizen.vercel.app'],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
+
 
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

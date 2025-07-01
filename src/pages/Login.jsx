@@ -5,7 +5,7 @@ import "./Login.css";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user"); // default role
+  const [role, setRole] = useState("user"); // Default to "user"
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -13,21 +13,21 @@ function Login() {
       const res = await axios.post("http://localhost:5000/api/auth/login", {
         email,
         password,
-        role,
+        role
       });
 
+      // Store token in localStorage
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", res.data.role);
       alert("Login successful!");
 
       // Redirect based on role
-      if (res.data.role === "admin") {
-        window.location.href = "/admin-dashboard";
+      if (role === "officer") {
+        window.location.href = "/officer-dashboard";
       } else {
         window.location.href = "/user-dashboard";
       }
     } catch (err) {
-      alert(err.response?.data?.message || "Login failed");
+      alert(err.response?.data?.msg || "Login failed");
     }
   };
 
@@ -37,25 +37,22 @@ function Login() {
       <form onSubmit={handleLogin}>
         <input
           type="email"
-          placeholder="Email"
+          placeholder="Email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Enter Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-
         <select value={role} onChange={(e) => setRole(e.target.value)} required>
           <option value="user">User</option>
-          <option value="admin">Admin/Official</option>
+          <option value="officer">Officer</option>
         </select>
-
         <button type="submit">Login</button>
       </form>
     </div>
