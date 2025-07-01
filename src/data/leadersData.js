@@ -1,17 +1,15 @@
-// src/data/leadersData.js
-
 export const leadersData = {
   "Delhi": {
     "South East Delhi": {
       mp: {
-        name: "Rahul Verma",
-        party: "Progressive Party",
-        image: "/images/rahul_verma.jpg" // ⬅️ Place image in public/images/
+        name: "XYZ Singh",
+        party: "ABC Party",
+        image: "/images/mp_xyz.jpg", // Path relative to public folder
       },
       mla: {
-        name: "Anjali Mehta",
-        party: "Green Alliance",
-        image: "/images/anjali_mehta.jpg" // ⬅️ Place image in public/images/
+        name: "PQR Mehta",
+        party: "DEF Party",
+        image: "/images/mla_pqr.jpg", // Path relative to public folder
       }
     }
   }

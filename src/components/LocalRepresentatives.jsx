@@ -62,26 +62,29 @@ const LocalRepresentatives = () => {
           </div>
 
           {leaders ? (
-            <div className="rep-leader-cards">
-              <div className="rep-card">
-                <h3>Member of Parliament (MP)</h3>
-                <p><strong>Name:</strong> {leaders.mp.name}</p>
-                <p><strong>Party:</strong> {leaders.mp.party}</p>
-              </div>
+  <div className="rep-leader-cards">
+    <div className="rep-card">
+      <img src={leaders.mp.image} alt="MP" className="rep-image" />
+      <h3>Member of Parliament (MP)</h3>
+      <p><strong>Name:</strong> {leaders.mp.name}</p>
+      <p><strong>Party:</strong> {leaders.mp.party}</p>
+    </div>
 
-              <div className="rep-card">
-                <h3>Member of Legislative Assembly (MLA)</h3>
-                <p><strong>Name:</strong> {leaders.mla.name}</p>
-                <p><strong>Party:</strong> {leaders.mla.party}</p>
-              </div>
-            </div>
-          ) : (
-            <div className="rep-not-found">
-              <h4>🚫 Representatives Not Found</h4>
-              <p>We’re still updating our database for <strong>{districtInfo.county || districtInfo.district}</strong>.</p>
-              <p>You can help by submitting info via our contact form.</p>
-            </div>
-          )}
+    <div className="rep-card">
+      <img src={leaders.mla.image} alt="MLA" className="rep-image" />
+      <h3>Member of Legislative Assembly (MLA)</h3>
+      <p><strong>Name:</strong> {leaders.mla.name}</p>
+      <p><strong>Party:</strong> {leaders.mla.party}</p>
+    </div>
+  </div>
+) : (
+  <div className="rep-not-found">
+    <h4>🚫 Representatives Not Found</h4>
+    <p>We’re still updating our database for <strong>{districtInfo.county || districtInfo.district}</strong>.</p>
+    <p>You can help by submitting info via our contact form.</p>
+  </div>
+)}
+
         </div>
       ) : (
         !error && <p className="rep-loading">Fetching your location...</p>

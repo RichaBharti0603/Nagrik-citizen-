@@ -1,34 +1,128 @@
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  background-color: #f4f9ff;
+  min-height: 100vh;
+}
+
 .report-form-container {
-  max-width: 550px;
-  margin: 2rem auto;
-  background: #f9f9ff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  margin-bottom: 30px;
 }
-.report-form-container h2 {
+
+h2 {
   text-align: center;
-  margin-bottom: 1.2rem;
+  color: #1e3a5f;
+  margin-bottom: 25px;
 }
-.report-form-container input,
-.report-form-container textarea,
-.report-form-container select {
-  width: 100%;
-  padding: 0.8rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
 }
-.report-form-container button {
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
   width: 100%;
-  padding: 0.9rem;
-  background-color: #0077cc;
-  color: white;
-  font-weight: bold;
+  padding: 10px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.form-row .form-group {
+  flex: 1;
+  min-width: 180px;
+}
+
+.form-submit {
+  text-align: center;
+}
+
+.form-submit button {
+  background-color:  #03203f;
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 25px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
-.report-form-container button:hover {
-  background-color: #005fa3;
+
+.form-submit button:hover {
+  background-color: transparent;
+  color:#03203f;
+  border:2px solid #03203f;
+}
+
+.image-preview {
+  max-width: 100%;
+  margin-top: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  object-fit: contain;
+}
+
+.dashboard-widget {
+  width: 100%;
+  max-width: 800px;
+  background: #e9f3ff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.dashboard-widget h3 {
+  margin-bottom: 10px;
+  color: #2b6cb0;
+}
+
+.submitted-issues-wrapper {
+  width: 100%;
+  max-width: 800px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .report-form-container,
+  .dashboard-widget {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
 }

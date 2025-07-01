@@ -1,75 +1,110 @@
+/* Wrapper */
 .report-issue-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 2rem;
-  padding: 1rem;
+  padding: 40px 20px;
+  background-color: #f0f4f8;
 }
 
+/* Card container */
 .report-card {
-  background-color: #ffffff;
-  padding: 2rem;
-  border-radius: 16px;
-  max-width: 600px;
   width: 100%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 750px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 35px 40px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
 }
 
+/* Title */
 .form-title {
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
+  font-size: 26px;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 25px;
   text-align: center;
-  color: #0b3954;
 }
 
-.report-form {
-  display: flex;
-  flex-direction: column;
-}
-
+/* Form group */
 .form-group {
-  margin-bottom: 1.2rem;
+  margin-bottom: 20px;
 }
 
-.form-group label {
+.report-form label {
   display: block;
-  margin-bottom: 0.4rem;
-  font-weight: 500;
-  color: #333;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 8px;
 }
 
-.report-form input[type="text"],
+.report-form input,
 .report-form textarea,
-.report-form input[type="file"] {
+.report-form select {
   width: 100%;
-  padding: 0.7rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-  resize: none;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  transition: 0.3s ease-in-out;
+  font-family: inherit;
+  box-sizing: border-box;
 }
 
 .report-form textarea {
+  resize: vertical;
   min-height: 100px;
 }
 
+.report-form input:focus,
+.report-form textarea:focus,
+.report-form select:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.3);
+}
+
+/* Submit button */
 .submit-btn {
-  background-color: #0b3954;
+  width: 100%;
+  background: #3182ce;
   color: white;
-  padding: 0.8rem 1.2rem;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  margin-top: 10px;
+  transition: background-color 0.25s ease;
 }
 
 .submit-btn:hover {
-  background-color: #093146;
+  background-color: #2b6cb0;
 }
 
+/* Message */
 .message {
-  margin-top: 1rem;
-  font-weight: bold;
-  color: green;
+  margin-top: 15px;
+  font-weight: 500;
   text-align: center;
+  color: #2d3748;
+}
+
+/* Image preview (optional future use) */
+.image-preview {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .report-card {
+    padding: 25px 20px;
+  }
+
+  .form-title {
+    font-size: 22px;
+  }
 }
