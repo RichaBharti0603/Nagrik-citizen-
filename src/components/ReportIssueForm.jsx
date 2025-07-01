@@ -62,40 +62,50 @@ function ReportIssueForm() {
   };
 
   return (
-    <div className="report-issue-container">
-      <h2>Report a Civic Issue</h2>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <label>Issue Description</label>
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          required
-        />
+  <div className="report-issue-wrapper">
+    <div className="report-card">
+      <h2 className="form-title">📢 Report a Civic Issue</h2>
+      <form onSubmit={handleSubmit} encType="multipart/form-data" className="report-form">
+        <div className="form-group">
+          <label>📝 Issue Description</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Describe the issue clearly..."
+            required
+          />
+        </div>
 
-        <label>Your Location (auto-filled)</label>
-        <input
-          type="text"
-          name="location"
-          value={formData.location}
-          onChange={handleChange}
-          required
-        />
+        <div className="form-group">
+          <label>📍 Your Location (auto-filled)</label>
+          <input
+            type="text"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            placeholder="Fetching your location..."
+            required
+          />
+        </div>
 
-        <label>Upload Image</label>
-        <input
-          type="file"
-          name="image"
-          accept="image/*"
-          onChange={handleChange}
-        />
+        <div className="form-group">
+          <label>📸 Upload Image</label>
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleChange}
+          />
+        </div>
 
-        <button type="submit">Submit Issue</button>
+        <button type="submit" className="submit-btn">🚀 Submit Issue</button>
+        {message && <p className="message">{message}</p>}
       </form>
-
-      {message && <p className="message">{message}</p>}
     </div>
-  );
+  </div>
+);
+
 }
 
 export default ReportIssueForm;

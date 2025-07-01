@@ -1,3 +1,4 @@
+// src/components/SubmittedIssues.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./SubmittedIssues.css";
@@ -8,9 +9,7 @@ const SubmittedIssues = () => {
   useEffect(() => {
     const fetchIssues = async () => {
       try {
-        const res = await axios.get(
-          "https://nagrik-citizen.onrender.com/api/issues"
-        );
+        const res = await axios.get("https://nagrik-citizen.onrender.com/api/issues");
         setIssues(res.data);
       } catch (err) {
         console.error("Failed to fetch issues", err);
@@ -22,23 +21,34 @@ const SubmittedIssues = () => {
 
   return (
     <div className="submitted-issues-container">
-      <h2>📋 Submitted Civic Issues</h2>
-      {issues.length === 0 ? (
-        <p>No issues reported yet.</p>
-      ) : (
-        issues.map((issue, index) => (
-          <div className="issue-card" key={index}>
-            <h3>{issue.description}</h3>
-            <p><strong>Location:</strong> {issue.location}</p>
-            {issue.image && (
-              <img
-                src={`https://nagrik-citizen.onrender.com/uploads/${issue.image}`}
-                alt="Reported"
-              />
-            )}
-          </div>
-        ))
-      )}
+      <h3>📋 Submitted Civic Issues</h3>
+      <div className="issue-cards-grid">
+        {issues.length === 0 ? (
+          <p>No issues submitted yet.</p>
+        ) : (
+          issues.map((issue, index) => (
+            <div className="issue-card" key={index}>
+              {issue.imageUrl && (
+                <img
+                  src={issue.imageUrl}
+                  alt="Submitted Civic Issue"
+                  className="issue-image"
+                />
+              )}
+              <div className="issue-details">
+                <h4>{issue.description}</h4>
+                <p>
+                  <strong>📍 Location:</strong> {issue.location}
+                </p>
+                <p>
+                  <strong>🕒 Date:</strong>{" "}
+                  {new Date(issue.createdAt).toLocaleDateString()}
+                </p>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };

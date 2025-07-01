@@ -1,18 +1,18 @@
+// src/data/leadersData.js
+
 export const leadersData = {
-  Rajasthan: {
-    Jaipur: {
-      mp: { name: "Ramcharan Bohra", party: "BJP" },
-      mla: { name: "Ashok Lahoty", party: "BJP" }
-    },
-    Kota: {
-      mp: { name: "Om Birla", party: "BJP" },
-      mla: { name: "Sandeep Sharma", party: "BJP" }
-    }
-  },
-  Maharashtra: {
-    Mumbai: {
-      mp: { name: "Arvind Sawant", party: "Shiv Sena" },
-      mla: { name: "Aaditya Thackeray", party: "Shiv Sena" }
+  "Delhi": {
+    "South East Delhi": {
+      mp: {
+        name: "Rahul Verma",
+        party: "Progressive Party",
+        image: "/images/rahul_verma.jpg" // ⬅️ Place image in public/images/
+      },
+      mla: {
+        name: "Anjali Mehta",
+        party: "Green Alliance",
+        image: "/images/anjali_mehta.jpg" // ⬅️ Place image in public/images/
+      }
     }
   }
-};
+}
