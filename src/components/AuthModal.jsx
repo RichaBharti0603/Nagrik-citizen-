@@ -1,27 +1,29 @@
-import React, { useState, useEffect } from "react";
+// src/components/AuthModal.jsx
+import React, { useState } from "react";
 import axios from "axios";
-import "./AuthModal.css"; // Custom styles
+import "./AuthModal.css";
 
 const AuthModal = ({ onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [role, setRole] = useState("user");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   const handleAuth = async (e) => {
     e.preventDefault();
     try {
       const endpoint = isLogin ? "login" : "signup";
-      const res = await axios.post(`http://localhost:5000/api/auth/${endpoint}`, {
-        email,
-        password,
-        role,
-      });
+      const payload = isLogin
+        ? { email, password, role }
+        : { name, email, password, role };
+
+      const res = await axios.post(`http://localhost:5000/api/auth/${endpoint}`, payload);
 
       if (isLogin) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("role", res.data.role);
-        onClose(); // Close modal
+        onClose();
         window.location.href = res.data.role === "officer" ? "/admin" : "/mydashboard";
       } else {
         alert("Signup successful! Please login.");
@@ -40,6 +42,15 @@ const AuthModal = ({ onClose }) => {
         <h2>{isLogin ? "Login to Nagrik" : "Create Your Nagrik Account"}</h2>
 
         <form onSubmit={handleAuth}>
+          {!isLogin && (
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          )}
           <input
             type="email"
             placeholder="Email address"
@@ -91,15 +102,14 @@ const AuthModal = ({ onClose }) => {
         </p>
 
         <button
-  className="guest-button"
-  onClick={() => {
-    localStorage.setItem("guest", "true");
-    onClose(); // Close modal
-  }}
->
-  Continue as Guest
-</button>
-
+          className="guest-button"
+          onClick={() => {
+            localStorage.setItem("guest", "true");
+            onClose();
+          }}
+        >
+          Continue as Guest
+        </button>
       </div>
     </div>
   );
