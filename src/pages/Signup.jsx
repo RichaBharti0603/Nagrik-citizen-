@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Login.css";
+import "./Login.css"; // assumes styles are already updated as shared before
 
 function Signup() {
   const [name, setName] = useState("");
@@ -49,10 +49,31 @@ function Signup() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <select value={role} onChange={(e) => setRole(e.target.value)} required>
-          <option value="user">User</option>
-          <option value="officer">Officer</option>
-        </select>
+
+        {/* Radio Button Role Selection */}
+        <div className="auth-role-options">
+          <label className="role-option">
+            <input
+              type="radio"
+              name="role"
+              value="user"
+              checked={role === "user"}
+              onChange={() => setRole("user")}
+            />
+            User
+          </label>
+          <label className="role-option">
+            <input
+              type="radio"
+              name="role"
+              value="officer"
+              checked={role === "officer"}
+              onChange={() => setRole("officer")}
+            />
+            Officer
+          </label>
+        </div>
+
         <button type="submit">Signup</button>
       </form>
     </div>

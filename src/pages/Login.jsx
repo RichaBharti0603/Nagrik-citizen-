@@ -5,7 +5,7 @@ import "./Login.css";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user"); // Default to "user"
+  const [role, setRole] = useState("user"); // Default role
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -13,14 +13,13 @@ function Login() {
       const res = await axios.post("http://localhost:5000/api/auth/login", {
         email,
         password,
-        role
+        role,
       });
 
-      // Store token in localStorage
       localStorage.setItem("token", res.data.token);
       alert("Login successful!");
 
-      // Redirect based on role
+      // Role-based navigation
       if (role === "officer") {
         window.location.href = "/officer-dashboard";
       } else {
@@ -49,10 +48,28 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <select value={role} onChange={(e) => setRole(e.target.value)} required>
-          <option value="user">User</option>
-          <option value="officer">Officer</option>
-        </select>
+
+        <div className="role-selection">
+          <label>
+            <input
+              type="radio"
+              value="user"
+              checked={role === "user"}
+              onChange={() => setRole("user")}
+            />
+            User
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="officer"
+              checked={role === "officer"}
+              onChange={() => setRole("officer")}
+            />
+            Officer
+          </label>
+        </div>
+
         <button type="submit">Login</button>
       </form>
     </div>

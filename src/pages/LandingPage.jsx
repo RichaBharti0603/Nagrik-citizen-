@@ -14,6 +14,7 @@ function LandingPage() {
   const [showModal, setShowModal] = useState(true);
   const [language, setLanguage] = useState(localStorage.getItem("language") || "en");
   const [email, setEmail] = useState("");
+  const [quote, setQuote] = useState(localStorage.getItem("quote") || "");
 
   const motivationalQuotes = [
     "“Be the change you want to see in the world.” – Mahatma Gandhi",
@@ -22,9 +23,14 @@ function LandingPage() {
     "“Technology + Civic Will = Powerful Change.”",
     "“Your voice matters. Raise it wisely.”",
   ];
-  const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
 
   useEffect(() => {
+    if (!quote) {
+      const selectedQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+      setQuote(selectedQuote);
+      localStorage.setItem("quote", selectedQuote);
+    }
+
     if (!localStorage.getItem("language")) {
       const browserLang = navigator.language.slice(0, 2);
       const supported = languages.find((l) => l.code === browserLang);
@@ -33,7 +39,7 @@ function LandingPage() {
         localStorage.setItem("language", supported.code);
       }
     }
-  }, []);
+  }, [quote]);
 
   const handleLanguageChange = (e) => {
     const lang = e.target.value;
@@ -44,6 +50,12 @@ function LandingPage() {
 
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
+
+    // Save subscriber email to localStorage
+    let existing = JSON.parse(localStorage.getItem("subscribers") || "[]");
+    existing.push(email);
+    localStorage.setItem("subscribers", JSON.stringify(existing));
+
     alert(`Thanks for subscribing, ${email}`);
     setEmail("");
   };
@@ -57,22 +69,26 @@ function LandingPage() {
         <div className="welcome-modal">
           <div className="modal-content">
             <h2>👋 Welcome to Nagrik</h2>
-            <p className="quote">{randomQuote}</p>
+            <p className="quote">{quote}</p>
             <button onClick={() => setShowModal(false)}>🚀 Continue to Nagrik</button>
           </div>
         </div>
       )}
 
-      {/* Top Login/Signup or Welcome */}
+      {/* Topbar */}
       <div className="topbar">
         <div className="welcome-message">
           {user ? (
             <>
               👋 Welcome, <strong>{user}</strong>
-              <button onClick={() => {
-                localStorage.removeItem("nagrikUser");
-                window.location.reload();
-              }}>Logout</button>
+              <button
+                onClick={() => {
+                  localStorage.removeItem("nagrikUser");
+                  window.location.reload();
+                }}
+              >
+                Logout
+              </button>
             </>
           ) : (
             <>
@@ -96,15 +112,17 @@ function LandingPage() {
                   <option key={lang.code} value={lang.code}>{lang.label}</option>
                 ))}
               </select>
+              <p style={{ fontSize: "0.85rem", color: "#333", marginTop: "4px" }}>
+                Selected: <strong>{languages.find(l => l.code === language)?.label}</strong>
+              </p>
             </div>
 
             <div className="cta-buttons">
-  <Link to="/report" className="btn">📌 Report an Issue</Link>
-  <Link to="/dashboard" className="btn">📊 Civic Dashboard</Link>
-  <Link to="/mydashboard" className="btn">👤 My Dashboard</Link>
-  <Link to="/polls" className="btn">🗳 Citizen Polls</Link>
-</div>
-
+              <Link to="/report" className="btn">📌 Report an Issue</Link>
+              <Link to="/dashboard" className="btn">📊 Civic Dashboard</Link>
+              <Link to="/mydashboard" className="btn">🙋🏻‍ My Dashboard</Link>
+              <Link to="/polls" className="btn">🗳 Citizen Polls</Link>
+            </div>
           </div>
 
           <div className="hero-image">
@@ -113,7 +131,7 @@ function LandingPage() {
         </div>
       </header>
 
-      {/* Civic Theory */}
+      {/* Civic Theory Section */}
       <section className="theory-section">
         <h2>📖 What is Civic Engagement?</h2>
         <p>Civic engagement is about making a difference in the civic life of our communities and developing the knowledge and skills to make that difference.</p>
@@ -140,6 +158,7 @@ function LandingPage() {
         </ul>
       </section>
 
+      {/* Platform Features */}
       <section className="features">
         <h2>✨ Platform Features</h2>
         <div className="feature-grid">
@@ -166,6 +185,7 @@ function LandingPage() {
         </div>
       </section>
 
+      {/* Newsletter Section */}
       <section className="newsletter">
         <h2>📬 Get Civic Updates</h2>
         <form onSubmit={handleNewsletterSubmit}>
@@ -177,9 +197,15 @@ function LandingPage() {
             required
           />
           <button type="submit">Subscribe</button>
+          {email && !email.includes("@") && (
+            <p style={{ color: "red", fontSize: "0.9rem", marginTop: "6px" }}>
+              ❌ Please enter a valid email.
+            </p>
+          )}
         </form>
       </section>
 
+      {/* Top Concerns */}
       <section className="top-concerns">
         <h2>🔥 Top Civic Concerns This Week</h2>
         <ul>
@@ -190,6 +216,7 @@ function LandingPage() {
         </ul>
       </section>
 
+      {/* Footer */}
       <footer className="footer">
         <p>© 2025 Nagrik. Built with ❤️ for Code for Bharat.</p>
         <Link to="/feedback" className="footer-link">💬 Give Feedback</Link>

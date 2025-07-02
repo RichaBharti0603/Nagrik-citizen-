@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import './App.css';
 
 // Pages
 import LandingPage from "./pages/LandingPage";
@@ -19,49 +20,51 @@ import GeoMapVisualizer from './pages/GeoMapVisualizer';
 import CampaignFilter from './pages/CampaignFilter';
 import PublicNotices from './pages/PublicNotices';
 import AdminContentManager from './pages/AdminContentManager';
-import AuthModal from './components/AuthModal'; // 👈 Import Modal Component
+import AuthModal from './components/AuthModal';
 import ReportIssue from "./pages/ReportIssue";
 
 function App() {
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
-    // ✅ Show welcome alert only once
     if (!localStorage.getItem("seenWelcomeAlert")) {
       alert("🚨 Welcome to Nagrik – Empowering Civic Engagement!");
       localStorage.setItem("seenWelcomeAlert", "true");
     }
 
-    // ✅ Show login/signup popup if not logged in
     const token = localStorage.getItem("token");
-    if (!token) {
-      setShowAuthModal(true);
+    const guest = localStorage.getItem("guest");
+
+    let timer;
+    if (!token && !guest) {
+      timer = setTimeout(() => {
+        setShowAuthModal(true);
+      }, 60000); // 1 minute
     }
+
+    return () => {
+      if (timer) clearTimeout(timer); // cleanup
+    };
   }, []);
 
   return (
     <Router>
-      {/* Optional Auth Modal */}
       {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
 
-      {/* Navigation */}
-      <header style={{ background: "#f0f0f0", padding: "1rem", textAlign: "center" }}>
-        <nav style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
+      <header className="main-header">
+        <div className="nav-wrapper">
           <Link to="/">🏠 Home</Link>
           <Link to="/report">📌 Report Issue</Link>
           <Link to="/dashboard">📊 Civic Dashboard</Link>
-          <Link to="/mydashboard">👤 My Dashboard</Link>
+          <Link to="/mydashboard">🙋🏻 My Dashboard</Link>
           <Link to="/polls">🗳 Polls</Link>
           <Link to="/admin">🔧 Admin Panel</Link>
           <Link to="/schemes">🏛 Schemes</Link>
           <Link to="/meetings">📅 Meetings</Link>
-        </nav>
+        </div>
       </header>
-      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
 
-
-      {/* Routes */}
-      <main>
+      <main className="main-content">
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/report" element={<ReportIssue />} />
